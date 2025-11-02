@@ -4,11 +4,12 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { LogOut, User2 } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const user = false;
+  const { user } = useSelector((store) => store.auth);
 
   return (
     <div className="text-sm text-white w-full">
@@ -171,7 +172,6 @@ const Navbar = () => {
                 </Link>
               </li>
             </ul>
-
 
             {/* Mobile Popup */}
             {!user ? (

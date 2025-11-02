@@ -2,6 +2,9 @@ import React from "react";
 import { Button } from "../ui/button";
 import { Bookmark } from "lucide-react";
 import { Avatar, AvatarImage } from "../ui/avatar";
+import { Link } from "react-router-dom";
+
+const jobId = "fddf";
 
 const JobsPageJob = () => {
   return (
@@ -44,11 +47,12 @@ const JobsPageJob = () => {
 
       {/* Job Details */}
       <div className="mb-4 flex-1">
-        <h1 className="text-xl font-bold text-gray-900 mb-2">Senior Frontend Developer</h1>
+        <h1 className="text-xl font-bold text-gray-900 mb-2">
+          Senior Frontend Developer
+        </h1>
         <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
-          We are looking for a skilled Frontend Developer with React
-          experience to join our dynamic team and build amazing user
-          experiences.
+          We are looking for a skilled Frontend Developer with React experience
+          to join our dynamic team and build amazing user experiences.
         </p>
       </div>
 
@@ -70,11 +74,14 @@ const JobsPageJob = () => {
 
       {/* Buttons */}
       <div className="flex gap-3 mt-auto">
-        <button className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 active:scale-95">
-          Save For Later
-        </button>
-        <button className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 active:scale-95">
+        <Link 
+          to={`/job-details/${jobId}`} 
+          className="flex-1 text-center bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 active:scale-95 flex items-center justify-center"
+        >    
           Details
+        </Link>
+        <button className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 active:scale-95">
+          Save For Later
         </button>
       </div>
     </div>

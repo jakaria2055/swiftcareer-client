@@ -6,6 +6,8 @@ import PrivacyPolicy from "./components/components_client/PrivacyPolicy";
 import TermCondition from "./components/components_client/TermCondition";
 import Browse from "./pages/Browse";
 import Jobs from "./pages/Jobs";
+import UserProfile from "./pages/UserProfile";
+import JobDetails from "./pages/JobDetails";
 
 const appRouter = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -15,6 +17,8 @@ const appRouter = createBrowserRouter([
   { path: "/term", element: <TermCondition /> },
   { path: "/browse", element: <Browse /> },
   { path: "/jobs", element: <Jobs /> },
+  { path: "/profile", element: <UserProfile /> },
+  { path: "/job-details/:id", element: <JobDetails /> },
 ]);
 
 function App() {
