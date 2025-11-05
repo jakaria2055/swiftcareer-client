@@ -20,9 +20,9 @@ const EditProfileModel = ({ open, setOpen }) => {
   const dispatch = useDispatch();
 
   const [input, setInput] = useState({
-    fullname: user?.fullname,
+    name: user?.fullname,
     email: user?.email,
-    phoneNumber: user?.phoneNumber,
+    phone: user?.phoneNumber,
     bio: user?.profile?.bio,
     skills: user?.profile?.skills.map((skills) => skills),
     file: user?.profile?.resume,
@@ -38,53 +38,36 @@ const EditProfileModel = ({ open, setOpen }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("fullname", input.name);
+    formData.append("email", input.email);
+    formData.append("phoneNumber", input.phone);
+    formData.append("bio", input.bio);
+    formData.append("skills", input.skills);
+    if (input.file) {
+      formData.append("file", input.file);
+    }
 
     try {
-      let res;
-
-      if (input.file instanceof File) {
-        // Only use FormData if there's a new file
-        const formData = new FormData();
-        formData.append("fullname", input.fullname);
-        formData.append("email", input.email);
-        formData.append("phoneNumber", input.phoneNumber);
-        formData.append("bio", input.bio);
-        formData.append("skills", input.skills);
-        formData.append("file", input.file);
-
-        res = await axios.post(
-          `${USER_API_ENDPOINT}/update/profile`,
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-            withCredentials: true,
-          }
-        );
-      } else {
-        // Send JSON data if no file
-        res = await axios.post(
-          `${USER_API_ENDPOINT}/update/profile`,
-          {
-            fullname: input.fullname,
-            email: input.email,
-            phoneNumber: input.phoneNumber,
-            bio: input.bio,
-            skills: input.skills,
-          },
-          {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-          }
-        );
-      }
-
+      setLoading(true)
+      const res = await axios.post(
+        `${USER_API_ENDPOINT}/update/profile`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: true,
+        }
+      );
       if (res.data.success) {
         dispatch(setUser(res.data.user));
         toast.success(res.data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response?.data?.message || "User Update failed!");
+      toast.error("User Update failed!");
+    }
+    finally{
+      setLoading(false)
     }
     setOpen(false);
   };
@@ -104,10 +87,10 @@ const EditProfileModel = ({ open, setOpen }) => {
                 </Label>
                 <input
                   type="text"
-                  value={input.fullname}
+                  value={input.name}
                   onChange={changeEventHandler}
-                  id="fullname"
-                  name="fullname"
+                  id="name"
+                  name="name"
                   className="col-span-3 w-full border border-gray-300 rounded-md p-2"
                 />
               </div>
@@ -131,7 +114,7 @@ const EditProfileModel = ({ open, setOpen }) => {
                 <input
                   type="text"
                   id="phone"
-                  value={input.phoneNumber}
+                  value={input.phone}
                   onChange={changeEventHandler}
                   name="phone"
                   className="col-span-3 w-full border border-gray-300 rounded-md p-2"
@@ -170,7 +153,6 @@ const EditProfileModel = ({ open, setOpen }) => {
                 <input
                   type="file"
                   id="file"
-                  value={input.file}
                   onChange={fileChangeHandler}
                   name="file"
                   accept="application/pdf"

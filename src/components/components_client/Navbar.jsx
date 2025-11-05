@@ -1,15 +1,38 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { LogOut, User2 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
+import axios from "axios";
+import { USER_API_ENDPOINT } from "@/utils/data";
+import { setUser } from "@/redux/authSlice";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((store) => store.auth);
+
+  const logoutHandler = async () => {
+    try {
+      const res = await axios.post(`${USER_API_ENDPOINT}/logout`, {
+        withCredentials: true,
+      });
+      if (res && res.data && res.data.success) {
+        dispatch(setUser(null));
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      if (error.response) {
+        toast.error(error.response.data.message);
+      }
+    }
+  };
 
   return (
     <div className="text-sm text-white w-full">
@@ -70,7 +93,7 @@ const Navbar = () => {
                 <PopoverTrigger asChild>
                   <Avatar className="cursor-pointer hover:opacity-90 transition">
                     <AvatarImage
-                      src="https://github.com/maxleiter.png"
+                      src={user?.profile?.profilePhoto}
                       alt="@maxleiter"
                     />
                   </Avatar>
@@ -89,15 +112,15 @@ const Navbar = () => {
                   <div className="flex items-center gap-3">
                     <Avatar className="rounded-lg cursor-pointer">
                       <AvatarImage
-                        src="https://github.com/evilrabbit.png"
+                        src={user?.profile?.profilePhoto}
                         alt="@evilrabbit"
                       />
                     </Avatar>
                     <div>
                       <h3 className="font-medium text-gray-800">
-                        Jakaria Ahmed
+                        {user?.fullname}
                       </h3>
-                      <p className="text-xs text-gray-500">Recruiter</p>
+                      <p className="text-xs text-gray-500">{user?.role}</p>
                     </div>
                   </div>
                   <div className="flex flex-col space-y-2 text-sm">
@@ -109,6 +132,7 @@ const Navbar = () => {
                       Profile
                     </Link>
                     <Button
+                      onClick={logoutHandler}
                       variant="outline"
                       size="sm"
                       className="w-full text-red-600 hover:bg-red-50 border border-red-200"
@@ -193,7 +217,7 @@ const Navbar = () => {
                     <PopoverTrigger asChild>
                       <Avatar className="cursor-pointer hover:opacity-90 transition">
                         <AvatarImage
-                          src="https://github.com/maxleiter.png"
+                          src={user?.profile?.profilePhoto}
                           alt="@maxleiter"
                         />
                       </Avatar>
@@ -212,15 +236,15 @@ const Navbar = () => {
                       <div className="flex items-center gap-3">
                         <Avatar className="rounded-lg cursor-pointer">
                           <AvatarImage
-                            src="https://github.com/evilrabbit.png"
+                            src={user?.profile?.profilePhoto}
                             alt="@evilrabbit"
                           />
                         </Avatar>
                         <div>
                           <h3 className="font-medium text-gray-800">
-                            Jakaria Ahmed
+                            {user?.fullname}
                           </h3>
-                          <p className="text-xs text-gray-500">Recruiter</p>
+                          <p className="text-xs text-gray-500">{user?.role}</p>
                         </div>
                       </div>
                       <div className="flex flex-col space-y-2 text-sm">
@@ -232,6 +256,7 @@ const Navbar = () => {
                           Profile
                         </Link>
                         <Button
+                          onClick={logoutHandler}
                           variant="outline"
                           size="sm"
                           className="w-full text-red-600 hover:bg-red-50 border border-red-200"
