@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authSliceReducer } from "./authSlice";
 import jobSlice, { jobReducer } from "./jobSlice"
+import { companySlice } from "./companySlice";
 
 
 const store = configureStore({
@@ -8,6 +9,7 @@ const store = configureStore({
     auth: authSliceReducer,
     job: jobSlice,
     jobs: jobReducer,
+    company: companySlice,
   },
 });
 

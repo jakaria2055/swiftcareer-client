@@ -8,6 +8,9 @@ import Browse from "./pages/Browse";
 import Jobs from "./pages/Jobs";
 import UserProfile from "./pages/UserProfile";
 import JobDetails from "./pages/JobDetails";
+import Companies from "./pages/Companies";
+import CreateCompanies from "./components/adminComponents/CreateCompanies";
+import SetupCompany from "./components/adminComponents/SetupCompany";
 
 const appRouter = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -19,6 +22,9 @@ const appRouter = createBrowserRouter([
   { path: "/jobs", element: <Jobs /> },
   { path: "/profile", element: <UserProfile /> },
   { path: "/job-details/:id", element: <JobDetails /> },
+  { path: "/admin/companies", element: <Companies /> },
+  { path: "/admin/companies/create", element: <CreateCompanies /> },
+  { path: "/admin/companies/:id", element: <SetupCompany /> },
 ]);
 
 function App() {
@@ -32,4 +38,4 @@ function App() {
 export default App;
 
 
-// 8:06
+// 8:55
