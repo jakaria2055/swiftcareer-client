@@ -4,13 +4,17 @@ import "./index.css";
 import App from "./App.jsx";
 import { Toaster } from "sonner";
 import { Provider } from "react-redux";
+import { persistor } from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 import store from "./redux/store";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-      <App />
-      <Toaster></Toaster>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+        <Toaster></Toaster>
+      </PersistGate>
     </Provider>
   </StrictMode>
 );

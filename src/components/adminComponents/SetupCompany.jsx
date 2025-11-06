@@ -6,8 +6,12 @@ import axios from "axios";
 import { COMPANY_API_ENDPOINT } from "@/utils/data";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
+import { useSelector } from "react-redux";
+import useGetCompanyById from "@/hooks/useGetCompanyById";
 
 const SetupCompany = () => {
+
+
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({
     name: "",
@@ -17,9 +21,13 @@ const SetupCompany = () => {
     file: null,
   });
 
+  const { singleCompany } = useSelector((store) => store.company);
+
   const navigate = useNavigate();
   const params = useParams();
   const companyID = params.id;
+
+  useGetCompanyById(companyID);
 
   // Handle input changes
   const changeEventHandler = (e) => {
@@ -46,25 +54,30 @@ const SetupCompany = () => {
 
     try {
       setLoading(true);
+      const token = localStorage.getItem("token");
+
       const res = await axios.put(
         `${COMPANY_API_ENDPOINT}/update/${companyID}`,
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: token ? `Bearer ${token}` : "",
           },
           withCredentials: true,
         }
       );
 
-      if (res.data.success) {
+      console.log("Response:", res.data);
+
+      if (res.status === 200 || res.data.message?.includes("successfully")) {
         toast.success(res.data.message || "Company updated successfully!");
-        navigate("/admin/companies");
+        setTimeout(() => navigate("/admin/companies"), 800);
       } else {
         toast.error(res.data.message || "Something went wrong!");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error in update:", error);
       toast.error(error.response?.data?.message || error.message);
     } finally {
       setLoading(false);
@@ -73,13 +86,13 @@ const SetupCompany = () => {
 
   useEffect(() => {
     setInput({
-      name: "",
-      description: "",
-      website: "",
-      location: "",
+      name: singleCompany?.name || "",
+      description: singleCompany?.description || "",
+      website: singleCompany?.website || "",
+      location: singleCompany?.location || "",
       file: null,
     });
-  }, []);
+  }, [singleCompany]);
 
   return (
     <>
@@ -106,7 +119,9 @@ const SetupCompany = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Company Name */}
               <div className="space-y-2">
-                <label className="font-semibold text-gray-700">Company Name *</label>
+                <label className="font-semibold text-gray-700">
+                  Company Name *
+                </label>
                 <input
                   type="text"
                   name="name"
@@ -134,7 +149,9 @@ const SetupCompany = () => {
 
               {/* Description - Full Width */}
               <div className="md:col-span-2 space-y-2">
-                <label className="font-semibold text-gray-700">Description *</label>
+                <label className="font-semibold text-gray-700">
+                  Description *
+                </label>
                 <textarea
                   name="description"
                   value={input.description}
@@ -148,7 +165,9 @@ const SetupCompany = () => {
 
               {/* Location */}
               <div className="space-y-2">
-                <label className="font-semibold text-gray-700">Location *</label>
+                <label className="font-semibold text-gray-700">
+                  Location *
+                </label>
                 <input
                   type="text"
                   name="location"
@@ -162,7 +181,9 @@ const SetupCompany = () => {
 
               {/* Logo Upload */}
               <div className="space-y-2">
-                <label className="font-semibold text-gray-700">Company Logo *</label>
+                <label className="font-semibold text-gray-700">
+                  Company Logo *
+                </label>
                 <div className="relative">
                   <input
                     type="file"
@@ -178,7 +199,9 @@ const SetupCompany = () => {
                     </span>
                   </div>
                 </div>
-                <p className="text-xs text-gray-500">Supported formats: JPG, PNG, SVG</p>
+                <p className="text-xs text-gray-500">
+                  Supported formats: JPG, PNG, SVG
+                </p>
               </div>
             </div>
 
