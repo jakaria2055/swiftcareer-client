@@ -28,15 +28,7 @@ const AdminJobTable = () => {
     setFilterJobs(filtered);
   }, [allAdminJobs, searchJobByText]);
 
-  const getStatusColor = (status) => {
-    switch (status?.toLowerCase()) {
-      case 'active': return 'bg-green-100 text-green-700';
-      case 'inactive': return 'bg-gray-100 text-gray-700';
-      case 'draft': return 'bg-yellow-100 text-yellow-700';
-      case 'closed': return 'bg-red-100 text-red-700';
-      default: return 'bg-blue-100 text-blue-700';
-    }
-  };
+
 
   return (
     <>
@@ -61,9 +53,6 @@ const AdminJobTable = () => {
             </TableHead>
             <TableHead className="font-semibold text-white py-5">
               Posted Date
-            </TableHead>
-            <TableHead className="font-semibold text-white py-5">
-              Status
             </TableHead>
             <TableHead className="font-semibold text-white py-5 text-right">
               Actions
@@ -111,7 +100,7 @@ const AdminJobTable = () => {
 
                 {/* Posted Date */}
                 <TableCell className="py-5">
-                  <div className="text-center">
+                  <div className="">
                     <div className="text-gray-900 font-medium">
                       {new Date(job.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                     </div>
@@ -121,12 +110,6 @@ const AdminJobTable = () => {
                   </div>
                 </TableCell>
 
-                {/* Status */}
-                <TableCell className="py-5">
-                  <Badge className={`${getStatusColor(job.status)} border-0 px-3 py-1.5 font-medium rounded-full`}>
-                    {job.status || 'Active'}
-                  </Badge>
-                </TableCell>
 
                 {/* Action Buttons */}
                 <TableCell className="py-5 text-right">
@@ -136,7 +119,6 @@ const AdminJobTable = () => {
                       className="p-2 hover:bg-indigo-100 rounded-lg transition-colors duration-200 text-gray-600 hover:text-indigo-700"
                       title="View Job"
                     >
-                      <Eye className="w-4 h-4" />
                     </button>
                     
                     <Popover>
