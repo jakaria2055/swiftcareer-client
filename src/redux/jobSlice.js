@@ -9,7 +9,7 @@ const jobSlice = createSlice({
     searchJobByText: "",
   },
   reducers: {
-    settAllJobs: (state, action) => {
+    setAllJobs: (state, action) => {
       state.alljobs = action.payload;
     },
     setSingleJob: (state, action) => {

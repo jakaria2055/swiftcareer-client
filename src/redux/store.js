@@ -3,7 +3,6 @@
 // import jobSlice, { jobReducer } from "./jobSlice"
 // import companyReducer from "./companySlice";
 
-
 // const store = configureStore({
 //   reducer: {
 //     auth: authSliceReducer,
@@ -15,7 +14,6 @@
 
 // export default store;
 
-
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // localStorage for web
@@ -23,6 +21,7 @@ import storage from "redux-persist/lib/storage"; // localStorage for web
 import { authSliceReducer } from "./authSlice";
 import jobSlice, { jobReducer } from "./jobSlice";
 import companyReducer from "./companySlice";
+import { applicationSliceReducer } from "./applicationSlice";
 
 // 1️⃣ Configure persist
 const persistConfig = {
@@ -37,6 +36,7 @@ const rootReducer = combineReducers({
   job: jobSlice,
   jobs: jobReducer,
   company: companyReducer,
+  application: applicationSliceReducer,
 });
 
 // 3️⃣ Wrap combined reducer with persistReducer
@@ -55,4 +55,3 @@ const store = configureStore({
 export const persistor = persistStore(store);
 
 export default store;
-

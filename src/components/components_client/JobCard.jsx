@@ -52,6 +52,7 @@ const JobCard = ({job}) => {
       </button>
     </div>
   )
+  
 }
 
 export default JobCard

@@ -130,15 +130,15 @@ const AdminJobTable = () => {
 
                       <PopoverContent className="w-48 p-3 space-y-2 border border-gray-200 shadow-lg">
                         <button
-                          onClick={() => navigate(`/admin/jobs/edit/${job._id}`)}
+                          onClick={() => navigate(`/admin/companies/${job._id}`)}
                           className="flex items-center gap-3 w-full p-2 hover:bg-indigo-50 rounded-lg transition-colors duration-200 text-gray-700 hover:text-indigo-700"
                         >
                           <Edit2 className="w-4 h-4" />
                           <span className="text-sm font-medium">Edit Job</span>
                         </button>
-                        <button className="flex items-center gap-3 w-full p-2 hover:bg-red-50 rounded-lg transition-colors duration-200 text-gray-700 hover:text-red-700">
-                          <Trash2 className="w-4 h-4" />
-                          <span className="text-sm font-medium">Delete Job</span>
+                        <button onClick={() => navigate(`/admin/jobs/${job._id}/applicants`)} className="flex items-center gap-3 w-full p-2 hover:bg-green-50 rounded-lg transition-colors duration-200 text-gray-700 hover:text-green-700">
+                          <Eye className="w-4 h-4" ></Eye>
+                          <span className="text-sm font-medium">Applicants</span>
                         </button>
                       </PopoverContent>
                     </Popover>

@@ -68,11 +68,11 @@ const JobDetails = () => {
   return (
     <>
       <Navbar />
-      <div className="max-w-7xl mx-auto my-10">
-        <div className="flex items-center justify-between">
+      <div className="max-w-7xl mx-auto my-10 px-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
           <div>
-            <h1 className="font-bold text-xl">{singleJob.title}</h1>
-            <div className="flex flex-wrap gap-2 mb-4">
+            <h1 className="font-bold text-2xl md:text-3xl text-gray-900 mb-3">{singleJob.title}</h1>
+            <div className="flex flex-wrap gap-2">
               <span className="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">
                 {singleJob.position} Position
               </span>
@@ -89,65 +89,85 @@ const JobDetails = () => {
           </div>
 
           <div>
-            <Button disabled={isApplied} onClick={!isApplied ? applyJobHandler : undefined}>
+            <Button 
+              disabled={isApplied} 
+              onClick={!isApplied ? applyJobHandler : undefined}
+              className="bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-indigo-200 active:scale-95 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            >
               {isApplied ? "Already Applied!" : "Apply Now"}
             </Button>
           </div>
         </div>
 
-        <div>
-          <h1 className="border-b-2 border-b-gray-500 font-medium py-4">
-            Job Description
-          </h1>
+        <div className="space-y-8">
+          {/* Job Description Section */}
           <div>
-            <h1 className="font-bold my-1">
-              Role:{" "}
-              <span className="pl-4 font-normal text-gray-700">
-                {singleJob.title}
-              </span>
+            <h1 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-gray-300">
+              Job Description
             </h1>
-            <h1 className="font-bold my-1">
-              Location:{" "}
-              <span className="pl-4 font-normal text-gray-700">
-                {singleJob.location}
-              </span>
+            <p className="text-gray-700 leading-relaxed">
+              {singleJob.description}
+            </p>
+          </div>
+
+          {/* Requirements Section */}
+          {singleJob.requirements && singleJob.requirements.length > 0 && (
+            <div>
+              <h1 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-gray-300">
+                Requirements & Skills
+              </h1>
+              <div className="flex flex-wrap gap-2">
+                {singleJob.requirements.map((requirement, index) => (
+                  <span
+                    key={index}
+                    className="px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium"
+                  >
+                    {requirement}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Job Details Section */}
+          <div>
+            <h1 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b-2 border-gray-300">
+              Job Details
             </h1>
-            <h1 className="font-bold my-1">
-              Salary:{" "}
-              <span className="pl-4 font-normal text-gray-700">
-                {singleJob.salary}k
-              </span>
-            </h1>
-            <h1 className="font-bold my-1">
-              Job Type:{" "}
-              <span className="pl-4 font-normal text-gray-700">
-                {singleJob.jobType}
-              </span>
-            </h1>
-            <h1 className="font-bold my-1">
-              Experience:{" "}
-              <span className="pl-4 font-normal text-gray-700">
-                {singleJob.experienceLevel} Years
-              </span>
-            </h1>
-            <h1 className="font-bold my-1">
-              Total Applicants:{" "}
-              <span className="pl-4 font-normal text-gray-700">
-                {singleJob.applications?.length || 0} Person
-              </span>
-            </h1>
-            <h1 className="font-bold my-1">
-              Post Date:{" "}
-              <span className="pl-4 font-normal text-gray-700">
-                {singleJob.createdAt?.split("T")[0]}
-              </span>
-            </h1>
-            <h1 className="font-bold my-1">
-              About Company:{" "}
-              <span className="pl-4 font-normal text-gray-700">
-                {singleJob.company?.name}
-              </span>
-            </h1>
+            <div className="space-y-4">
+              <div className="flex items-center">
+                <h1 className="font-bold text-gray-700 min-w-32">Role:</h1>
+                <span className="text-gray-600 ml-4">{singleJob.title}</span>
+              </div>
+              <div className="flex items-center">
+                <h1 className="font-bold text-gray-700 min-w-32">Location:</h1>
+                <span className="text-gray-600 ml-4">{singleJob.location}</span>
+              </div>
+              <div className="flex items-center">
+                <h1 className="font-bold text-gray-700 min-w-32">Salary:</h1>
+                <span className="text-gray-600 ml-4">${singleJob.salary}k</span>
+              </div>
+              <div className="flex items-center">
+                <h1 className="font-bold text-gray-700 min-w-32">Job Type:</h1>
+                <span className="text-gray-600 ml-4">{singleJob.jobType}</span>
+              </div>
+              <div className="flex items-center">
+                <h1 className="font-bold text-gray-700 min-w-32">Experience:</h1>
+                <span className="text-gray-600 ml-4">{singleJob.experienceLevel} Years</span>
+              </div>
+              <div className="flex items-center">
+                <h1 className="font-bold text-gray-700 min-w-32">Total Applicants:</h1>
+                <span className="text-gray-600 ml-4">{singleJob.applications?.length || 0} Person</span>
+              </div>
+              <div className="flex items-center">
+                <h1 className="font-bold text-gray-700 min-w-32">Post Date:</h1>
+                <span className="text-gray-600 ml-4">{singleJob.createdAt?.split("T")[0]}</span>
+              </div>
+              <div className="flex items-center">
+                <h1 className="font-bold text-gray-700 min-w-32">About Company:</h1>
+                <span className="text-gray-600 ml-4">{singleJob.company?.name}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
