@@ -3,15 +3,22 @@ import JobCard from "@/components/components_client/JobCard";
 import JobsPageJob from "@/components/components_client/JobsPageJob";
 import Navbar from "@/components/components_client/Navbar";
 import useUserGetJob from "@/hooks/useUserGetJob";
-import React from "react";
-import { useSelector } from "react-redux";
-
-
+import { setSearchedQuery } from "@/redux/jobSlice";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const Browse = () => {
-    useUserGetJob();
+  useUserGetJob();
+  const dispatch = useDispatch();
 
   const { alljobs } = useSelector((store) => store.job);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setSearchedQuery(""));
+    };
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -21,7 +28,7 @@ const Browse = () => {
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {alljobs.map((job) => {
-            return <JobsPageJob key={job._id} job={job}/>;
+            return <JobCard key={job._id} job={job} />;
           })}
         </div>
       </div>

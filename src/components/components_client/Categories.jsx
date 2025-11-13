@@ -7,21 +7,32 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSearchedQuery } from "@/redux/jobSlice";
 
 const Categories = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const searchJobHandler = (query) => {
+    dispatch(setSearchedQuery(query));
+    navigate("/browse");
+  };
+
   const categories = [
-    "MERN Developer",
+    "MERN",
+    "Python",
+    "UI-UX Designer",
+    "Flutter",
     "Frontend Developer",
     "Machine Learning Developer",
-    "Flutter Developer",
-    "UI-UX Designer",
     "Junior Backend Dev",
     "SpringBot Developer",
     "Component Builder",
     "Web Designer",
     "Robotix",
     "Android",
-    "Python",
     "Data Mining expert",
   ];
 
@@ -47,7 +58,10 @@ const Categories = () => {
                 key={index}
                 className="pl-2 md:pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4"
               >
-                <Button className="w-full h-20 bg-white/80 backdrop-blur-sm border-2 border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 text-gray-700 hover:text-indigo-700 font-semibold text-sm md:text-base rounded-2xl shadow-lg shadow-gray-100/50 hover:shadow-indigo-100/70 transition-all duration-300 hover:scale-105 active:scale-95 whitespace-normal break-words px-4 py-6">
+                <Button
+                  onClick={() => searchJobHandler(category)}
+                  className="w-full h-20 bg-white/80 backdrop-blur-sm border-2 border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 text-gray-700 hover:text-indigo-700 font-semibold text-sm md:text-base rounded-2xl shadow-lg shadow-gray-100/50 hover:shadow-indigo-100/70 transition-all duration-300 hover:scale-105 active:scale-95 whitespace-normal break-words px-4 py-6"
+                >
                   {category}
                 </Button>
               </CarouselItem>

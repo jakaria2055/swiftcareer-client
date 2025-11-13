@@ -35,15 +35,18 @@ const Applicants = () => {
     <>
       <Navbar />
 
-      <div className="max-w-7xl mx-auto mt-5">
-        <h3 className="text-xl font-bold text-gray-800">
-          Applicants ({applications?.applications?.length || 0})
-        </h3>
+      <div className="max-w-7xl mx-auto mt-8 px-4">
+        <div className="bg-white rounded-lg p-6 border border-gray-200">
+          <h3 className="text-2xl font-bold text-gray-900 mb-2">
+            Applicants ({applications?.applications?.length || 0})
+          </h3>
+          <p className="text-gray-600 mb-6">Manage and review all job applications</p>
 
-        <hr className="mt-1 font-bold text-2xl" />
+          <hr className="mb-6 border-gray-300" />
 
-        <div className="mt-5">
-          <Applicantstable applicants={applications?.applications || []} />
+          <div className="mt-2">
+            <Applicantstable applicants={applications?.applications || []} />
+          </div>
         </div>
       </div>
     </>

@@ -1,6 +1,18 @@
-import React from "react";
+import { setSearchedQuery } from "@/redux/jobSlice";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Headers = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [query, setQuery] = useState("");
+
+  const searchJobHandler = () => {
+    dispatch(setSearchedQuery(query));
+    navigate("/browse");
+  };
+
   return (
     <section className="bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <main className="flex flex-col max-md:gap-20 md:flex-row pb-20 items-center justify-between mt-20 px-4 md:px-16 lg:px-24 xl:px-32">
@@ -59,7 +71,9 @@ const Headers = () => {
                     </svg>
                   ))}
               </div>
-              <p className="text-sm font-medium text-gray-700 mt-1">No.1 Job Hunt Website</p>
+              <p className="text-sm font-medium text-gray-700 mt-1">
+                No.1 Job Hunt Website
+              </p>
             </div>
           </div>
 
@@ -72,8 +86,9 @@ const Headers = () => {
           </h1>
 
           <p className="text-center md:text-left text-lg text-gray-600 max-w-2xl mt-6 leading-relaxed">
-            Unlock exclusive job opportunities and talent pools in one platform. 
-            Join SwiftCareer - the fastest way to connect students with career opportunities.
+            Unlock exclusive job opportunities and talent pools in one platform.
+            Join SwiftCareer - the fastest way to connect students with career
+            opportunities.
           </p>
 
           <div className="flex items-center bg-white border-2 border-gray-200 rounded-2xl gap-3 mt-8 h-14 px-4 shadow-lg shadow-indigo-100/30 hover:shadow-indigo-200/40 transition-all duration-300 focus-within:border-indigo-500 focus-within:ring-4 focus-within:ring-indigo-100 max-w-md w-full">
@@ -90,9 +105,11 @@ const Headers = () => {
             <input
               type="text"
               placeholder="Find Your Dream Job..."
+              onChange={(e) => setQuery(e.target.value)}
               className="w-full h-full outline-none bg-transparent placeholder-gray-400 text-gray-700 text-base font-medium"
             />
             <button
+              onClick={searchJobHandler}
               type="submit"
               className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 w-32 h-10 rounded-xl text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-indigo-200 hover:shadow-indigo-300 active:scale-95"
             >

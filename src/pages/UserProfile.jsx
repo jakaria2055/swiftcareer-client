@@ -4,11 +4,14 @@ import Navbar from "@/components/components_client/Navbar";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useGetAppliedJobs } from "@/hooks/useGetAppliedJobs";
 import { Contact, Mail, Pen } from "lucide-react";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 const UserProfile = () => {
+  useGetAppliedJobs();
+
   const [open, setOpen] = useState(false);
   const { user } = useSelector((store) => store.auth);
   const isResume = user?.profile?.resume ? true : false;
@@ -77,31 +80,6 @@ const UserProfile = () => {
           </div>
         </div>
 
-        {/* <div className="mt-8">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border border-indigo-100">
-            <div>
-              <label className="text-lg font-bold text-gray-900">Resume</label>
-              <p className="text-gray-600 text-sm mt-1">
-                Download your current resume
-              </p>
-            </div>
-            <div>
-              {isResume ? (
-                <a
-                  target="_blank"
-                  href={user?.profile?.resume}
-                  className="px-6 py-3 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-indigo-200 active:scale-95 inline-block"
-                >
-                 Download
-                </a>
-              ) : (
-                <span className="text-red-500 font-medium">
-                  No Resume Found!
-                </span>
-              )}
-            </div>
-          </div>
-        </div> */}
 
         <div className="mt-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border border-indigo-100">

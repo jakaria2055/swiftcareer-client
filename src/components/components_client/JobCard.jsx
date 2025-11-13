@@ -1,20 +1,38 @@
-import React from 'react'
+import React from "react";
+import { Avatar, AvatarImage } from "../ui/avatar";
+import { useNavigate } from "react-router-dom";
 
-const JobCard = ({job}) => {
+const JobCard = ({ job }) => {
+  const navigate = useNavigate()
   return (
     <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all duration-300">
       {/* Company Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-700 font-bold text-sm">
-            CN
+            <Avatar className="w-12 h-12 rounded-xl border">
+              <AvatarImage src={job?.company?.logo} alt="Company" />
+            </Avatar>
           </div>
           <div>
-            <h2 className="font-bold text-gray-900 text-lg">{job?.company?.name}</h2>
+            <h2 className="font-bold text-gray-900 text-lg">
+              {job?.company?.name}
+            </h2>
             <p className="text-gray-500 text-sm flex items-center gap-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-map-pin">
-                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-                <circle cx="12" cy="10" r="3"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-map-pin"
+              >
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                <circle cx="12" cy="10" r="3" />
               </svg>
               {job?.company?.location}
             </p>
@@ -47,12 +65,11 @@ const JobCard = ({job}) => {
       </div>
 
       {/* Apply Button */}
-      <button className="w-full mt-4 bg-indigo-500 hover:bg-indigo-600 text-white py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 active:scale-95">
-        Apply Now
+      <button onClick={() => navigate(`/job-details/${job?._id}`)} className="w-full mt-4 bg-indigo-500 hover:bg-indigo-600 text-white py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 active:scale-95">
+        See Details
       </button>
     </div>
-  )
-  
-}
+  );
+};
 
-export default JobCard
+export default JobCard;
