@@ -4,20 +4,22 @@ import { Bookmark } from "lucide-react";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Link } from "react-router-dom";
 
-
-
-const JobsPageJob = ({job}) => {
+const JobsPageJob = ({ job }) => {
   const daysAgo = (mongodbTime) => {
     const createdAt = new Date(mongodbTime);
     const currentTime = new Date();
     const timeDiff = currentTime - createdAt;
     return Math.floor(timeDiff / (1000 * 3600 * 24));
-  }
+  };
   return (
-    <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all duration-300 h-full flex flex-col">
+    <div className="bg-white rounded-xl p-3 border border-gray-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all duration-300 h-full flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <p className="text-sm text-gray-500">{daysAgo(job?.createdAt) === 0 ? "Today" : `${daysAgo(job?.createdAt)} days ago`} </p>
+        <p className="text-sm text-gray-500">
+          {daysAgo(job?.createdAt) === 0
+            ? "Today"
+            : `${daysAgo(job?.createdAt)} days ago`}{" "}
+        </p>
         <Button variant={"outline"} className={"rounded-full"} size={"icon"}>
           <Bookmark className="h-4 w-4" />
         </Button>
@@ -29,7 +31,9 @@ const JobsPageJob = ({job}) => {
           <AvatarImage src={job?.company?.logo} alt="Company" />
         </Avatar>
         <div className="flex-1">
-          <h2 className="font-bold text-gray-900 text-lg">{job?.company?.name}</h2>
+          <h2 className="font-bold text-gray-900 text-lg">
+            {job?.company?.name}
+          </h2>
           <p className="text-gray-500 text-sm flex items-center gap-1 mt-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -53,9 +57,7 @@ const JobsPageJob = ({job}) => {
 
       {/* Job Details */}
       <div className="mb-4 flex-1">
-        <h1 className="text-xl font-bold text-gray-900 mb-2">
-          {job?.title}
-        </h1>
+        <h1 className="text-xl font-bold text-gray-900 mb-2">{job?.title}</h1>
         <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">
           {job?.description}
         </p>
@@ -79,10 +81,10 @@ const JobsPageJob = ({job}) => {
 
       {/* Buttons */}
       <div className="flex gap-3 mt-auto">
-        <Link 
-          to={`/job-details/${job._id}`} 
+        <Link
+          to={`/job-details/${job._id}`}
           className="flex-1 text-center bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 active:scale-95 flex items-center justify-center"
-        >    
+        >
           Details
         </Link>
         <button className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 active:scale-95">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components_client/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -10,7 +10,7 @@ import { setLoading } from "@/redux/authSlice";
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector((store) => store.auth);
+  const { loading, user } = useSelector((store) => store.auth);
   const [input, setInput] = useState({
     fullname: "",
     email: "",
@@ -61,6 +61,12 @@ const Register = () => {
       dispatch(setLoading(false));
     }
   };
+
+    useEffect(() => {
+      if (user) {
+        navigate("/");
+      }
+    }, []);
   return (
     <>
       {/* Navbar */}

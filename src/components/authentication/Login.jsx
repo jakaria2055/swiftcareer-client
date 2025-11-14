@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components_client/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import { USER_API_ENDPOINT } from "@/utils/data";
@@ -10,7 +10,7 @@ import { setLoading, setUser } from "@/redux/authSlice";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector((store) => store.auth);
+  const { loading, user } = useSelector((store) => store.auth);
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -46,6 +46,12 @@ const Login = () => {
       dispatch(setLoading(false));
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <>
