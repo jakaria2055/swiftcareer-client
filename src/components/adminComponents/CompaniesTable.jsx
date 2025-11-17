@@ -12,7 +12,7 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Edit2, MoreHorizontal, Trash2 } from "lucide-react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CompaniesTable = () => {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const CompaniesTable = () => {
           ?.toLowerCase()
           .includes(searchCompanyByText.toLowerCase());
       });
-      setFilterCompany(filteredCompany)
+    setFilterCompany(filteredCompany);
   }, [companies, searchCompanyByText]);
 
   return (
@@ -79,8 +79,20 @@ const CompaniesTable = () => {
                 </TableCell>
 
                 {/* Company Name */}
-                <TableCell className="py-4 font-semibold text-gray-900">
-                  {company.name}
+                <TableCell className="py-4">
+                  <Link
+                    to={`/admin/company/details/${company._id}`}
+                    className="font-semibold text-gray-900 hover:text-indigo-600 hover:scale-105 transform transition-all duration-300 ease-in-out inline-block relative group"
+                  >
+                    {company.name}
+                    {/* Underline animation */}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-indigo-600 transition-all duration-300 group-hover:w-full"></span>
+
+                    {/* Hover tooltip */}
+                    <span className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap z-10">
+                      View Company Details
+                    </span>
+                  </Link>
                 </TableCell>
 
                 {/* Registration Date */}
@@ -98,7 +110,12 @@ const CompaniesTable = () => {
                     </PopoverTrigger>
 
                     <PopoverContent className="w-40 p-3 space-y-2">
-                      <button onClick={()=>navigate(`/admin/companies/${company._id}`)} className="flex items-center gap-3 w-full p-2 hover:bg-indigo-50 rounded-lg transition-colors duration-200 text-gray-700 hover:text-indigo-700">
+                      <button
+                        onClick={() =>
+                          navigate(`/admin/companies/${company._id}`)
+                        }
+                        className="flex items-center gap-3 w-full p-2 hover:bg-indigo-50 rounded-lg transition-colors duration-200 text-gray-700 hover:text-indigo-700"
+                      >
                         <Edit2 className="w-4 h-4" />
                         <span className="text-sm font-medium">Edit</span>
                       </button>

@@ -1,4 +1,5 @@
 import Categories from "@/components/components_client/Categories";
+import CompaniesJob from "@/components/components_client/CompaniesJob";
 import Footer from "@/components/components_client/Footer";
 import Headers from "@/components/components_client/Headers";
 import LatestJob from "@/components/components_client/LatestJob";
@@ -12,18 +13,19 @@ const Home = () => {
   const navigate = useNavigate();
   const { user } = useSelector((store) => store.auth);
   useUserGetJob();
-
+  
   useEffect(() => {
     if (user?.role === "Recruiter") {
       navigate("/admin/companies");
     }
   });
-  
+
   return (
     <>
       <Navbar />
       <Headers />
       <Categories />
+      <CompaniesJob />
       <LatestJob />
       <Footer />
     </>

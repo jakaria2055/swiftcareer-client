@@ -15,6 +15,8 @@ import AdminJob from "./pages/AdminJob";
 import PostJob from "./pages/PostJob";
 import Applicants from "./pages/Applicants";
 import ProtectedRoutes from "./components/adminComponents/ProtectedRoutes";
+import CompanyDetails from "./pages/CompanyDetails";
+import CompaniesJobPage from "./pages/CompaniesJobPage";
 
 const appRouter = createBrowserRouter([
   { path: "/", element: <Home /> },
@@ -26,6 +28,7 @@ const appRouter = createBrowserRouter([
   { path: "/jobs", element: <Jobs /> },
   { path: "/profile", element: <UserProfile /> },
   { path: "/job-details/:id", element: <JobDetails /> },
+  { path: "/company/job/:id", element: <CompaniesJobPage /> },
 
   // ADMIN ROUTES
   {
@@ -73,6 +76,14 @@ const appRouter = createBrowserRouter([
     element: (
       <ProtectedRoutes>
         <Applicants />
+      </ProtectedRoutes>
+    ),
+  },
+  {
+    path: "/admin/company/details/:id",
+    element: (
+      <ProtectedRoutes>
+        <CompanyDetails />
       </ProtectedRoutes>
     ),
   },
